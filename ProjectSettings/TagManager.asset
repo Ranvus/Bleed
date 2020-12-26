@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Character
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - 
   - 
   - Ground
-  - 
-  - 
+  - Enemy
+  - Character
   - 
   - 
   - 
@@ -44,8 +46,14 @@ TagManager:
   - name: Background
     uniqueID: 3762333159
     locked: 0
+  - name: Enemy Fluids
+    uniqueID: 1472123051
+    locked: 0
   - name: Entity
     uniqueID: 1715584101
+    locked: 0
+  - name: Blood
+    uniqueID: 1996641487
     locked: 0
   - name: Foreground
     uniqueID: 37211783

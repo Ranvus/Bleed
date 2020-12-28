@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpawnerController : MonoBehaviour
 {
+    private Animator anim;
+
     [SerializeField] private ParticleSystem particles;
 
     private float timer;
@@ -11,7 +13,7 @@ public class SpawnerController : MonoBehaviour
 
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -19,9 +21,11 @@ public class SpawnerController : MonoBehaviour
         if (timer > 0)
         {
             timer -= Time.deltaTime;
+            anim.SetBool("isShooting", false);
         }
         else
         {
+            anim.SetBool("isShooting", true);
             Shoot();
             timer = cooldown;
         }

@@ -7,6 +7,7 @@ public class CharacterController : MonoBehaviour
     [Header("Components")]
     private Rigidbody2D rb;
     private Animator anim;
+    public ParticleSystem bloodAmount;
 
     [Header("Horizontal movement variables")]
     protected Vector2 dir;
@@ -35,11 +36,20 @@ public class CharacterController : MonoBehaviour
     [Header("Animation variables")]
     private bool isRunning;
 
+    [Header("Blood variables")]
+    public float maxBlood;
+    public float currentBlood;
+    public BloodBarController bloodBar;
+
     //Функция, выполняющаяся при "включении" объекта
     private void OnEnable()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        maxBlood = bloodAmount.main.duration;
+        currentBlood = maxBlood;
+        bloodBar.SetMaxBlood(maxBlood);
     }
 
     void Update()
@@ -92,6 +102,10 @@ public class CharacterController : MonoBehaviour
         }
 
         wasOnGround = isGrounded;
+
+        //Bleeding
+        currentBlood = maxBlood - bloodAmount.time;
+        bloodBar.SetBlood(currentBlood);
     }
 
     private void FixedUpdate()

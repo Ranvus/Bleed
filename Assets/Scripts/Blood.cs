@@ -20,15 +20,16 @@ public class Blood : MonoBehaviour
         int numCollisionEvents = particleSystem.GetCollisionEvents(other, particleCollisionEvent);
 
         //Цикл для нанесения урона
-        /*for (int i = 0; i < numCollisionEvents; i++)
+        for (int i = 0; i < numCollisionEvents; i++)
         {
             //Содержит объект с которым взаимодействуют частицы
             var collider = particleCollisionEvent[i].colliderComponent;
             //Если у объекта который столкнулся с частицей есть тэг "Enemy", то объект получает урон
             if (collider.CompareTag("Enemy"))
             {
-                print('a');
+                Destroy(collider.gameObject);
+                CinemachineShake.Instance.ShakeCamera(5f, .1f);
             }
-        }*/
+        }
     }
 }

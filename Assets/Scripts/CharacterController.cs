@@ -11,14 +11,14 @@ public class CharacterController : MonoBehaviour
 
     [Header("Horizontal movement variables")]
     protected Vector2 dir;
-    private float moveSpeed = 7f;
+    [SerializeField] private float moveSpeed = 7.5f;
     private bool facingRight = true;
 
     public ParticleSystem dust;
     private bool wasOnGround;
 
     [Header("Jump variables")]
-    private float jumpForce = 7f;
+    [SerializeField] private float jumpForce = 8f;
     private bool jumpRequest;
     private float jumpBufferLength = .1f;
     [SerializeField] private float jumpBufferCount;
@@ -27,7 +27,7 @@ public class CharacterController : MonoBehaviour
 
     [Header("Gravity variables")]
     private float fallMultiplier = 2.5f;
-    private float lowJumpMultiplier = 4f;
+    private float lowJumpMultiplier = 5f;
 
     [Header("Ground check variables")]
     [SerializeField] private LayerMask ground;
@@ -35,11 +35,18 @@ public class CharacterController : MonoBehaviour
 
     [Header("Animation variables")]
     private bool isRunning;
+    private bool isWalking;
+    private bool isDraging;
 
     [Header("Blood variables")]
     public float maxBlood;
-    public float currentBlood;
+    [SerializeField] public float currentBlood;
     public BloodBarController bloodBar;
+
+    [SerializeField] private GameOverScreen gameOverScreen;
+    [SerializeField] private EnemyFluids enemyFluid;
+
+    public bool isCharacterDead = false;
 
     //Функция, выполняющаяся при "включении" объекта
     private void OnEnable()
@@ -106,6 +113,29 @@ public class CharacterController : MonoBehaviour
         //Bleeding
         currentBlood = maxBlood - bloodAmount.time;
         bloodBar.SetBlood(currentBlood);
+
+        //Усталость
+        if (currentBlood < 30f)
+        {
+            moveSpeed = 4.5f;
+            jumpForce = 6.4f;
+            
+        }
+
+        if (currentBlood < 5f)
+        {
+            moveSpeed = 2.5f;
+            jumpForce = 3.4f;
+        }
+
+        
+        //Смерть
+        if (bloodAmount.time == maxBlood || isCharacterDead == true)
+        {
+            CinemachineShake.Instance.ShakeCamera(5f, .1f);
+            Destroy(this.gameObject);
+            gameOverScreen.Setup();
+        }
     }
 
     private void FixedUpdate()
@@ -158,6 +188,7 @@ public class CharacterController : MonoBehaviour
         anim.SetBool("isRunning", isRunning);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetFloat("vSpeed", rb.velocity.y);
+        anim.SetFloat("bloodAmount", currentBlood);
     }
 
     private void OnDrawGizmos()

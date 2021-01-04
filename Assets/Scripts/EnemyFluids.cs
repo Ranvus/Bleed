@@ -7,6 +7,9 @@ public class EnemyFluids : MonoBehaviour
     private new ParticleSystem particleSystem;
     private List<ParticleCollisionEvent> particleCollisionEvent;
 
+
+    [SerializeField] private CharacterController character;
+
     void Start()
     {
         particleSystem = GetComponent<ParticleSystem>();
@@ -27,7 +30,7 @@ public class EnemyFluids : MonoBehaviour
             //Если у объекта который столкнулся с частицей есть тэг "Enemy", то объект получает урон
             if (collider.CompareTag("Character"))
             {
-                print('a');
+                character.isCharacterDead = true;
             }
         }
     }

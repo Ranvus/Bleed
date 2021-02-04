@@ -13,7 +13,8 @@ public class GameOverScreen : MonoBehaviour
 
     public void RestartBtn()
     {
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
     }
 
     public void ExitBtn()

@@ -7,6 +7,7 @@ public class SpawnerController : MonoBehaviour
     private Animator anim;
 
     [SerializeField] private ParticleSystem particles;
+    [SerializeField] private AudioSource sound;
 
     private float timer;
     private float cooldown = 3f;
@@ -25,6 +26,7 @@ public class SpawnerController : MonoBehaviour
         }
         else
         {
+            sound.Play();
             anim.SetBool("isShooting", true);
             Shoot();
             timer = cooldown;

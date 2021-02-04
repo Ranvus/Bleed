@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 3495693689014394489}
+        m_Texture: {fileID: 8129393520903564498}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -1044,7 +1044,7 @@ MonoBehaviour:
     m_GlyphIndex: 53
     m_Scale: 1
   m_AtlasTextures:
-  - {fileID: 3495693689014394489}
+  - {fileID: 8129393520903564498}
   m_AtlasTextureIndex: 0
   m_UsedGlyphRects:
   - m_X: 0
@@ -1324,7 +1324,7 @@ MonoBehaviour:
     atlasWidth: 1024
     atlasHeight: 1024
     characterSetSelectionMode: 6
-    characterSequence: 20-21,30-39,41-5A,61-7A
+    characterSequence: 20-21,30-39,41-5A,61-6B,6D
     referencedFontAssetGUID: 9ab5ceb5b26c7fc40baae3e6f04e0957
     referencedTextAssetGUID: 
     fontStyle: 0
@@ -1359,7 +1359,7 @@ MonoBehaviour:
   boldSpacing: 7
   italicStyle: 35
   tabSize: 10
---- !u!28 &3495693689014394489
+--- !u!28 &8129393520903564498
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

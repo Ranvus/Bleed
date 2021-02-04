@@ -14,6 +14,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float moveSpeed = 7.5f;
     private bool facingRight = true;
 
+    [Header("Dust variables")]
     public ParticleSystem dust;
     private bool wasOnGround;
 
@@ -42,9 +43,12 @@ public class CharacterController : MonoBehaviour
     public float maxBlood;
     [SerializeField] public float currentBlood;
     public BloodBarController bloodBar;
+    [SerializeField] private float walkVelocity;
+    [SerializeField] private float dragVelocity;
 
+    [Header("Other script variables")]
     [SerializeField] private GameOverScreen gameOverScreen;
-    [SerializeField] private EnemyFluids enemyFluid;
+    [SerializeField] private LevelLoader levelLoader;
 
     public bool isCharacterDead = false;
 
@@ -75,14 +79,14 @@ public class CharacterController : MonoBehaviour
             hangCounter = hangTime;
         }
 
-        //Jump buffer
+        //Буфер прыжка
         jumpBufferCount -= Time.deltaTime;
         if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCount = jumpBufferLength;
         }
 
-        //Jump
+        //Прыжок
         if (jumpBufferCount > 0 && hangCounter > 0)
         {
             hangCounter = 0;
@@ -90,7 +94,7 @@ public class CharacterController : MonoBehaviour
             CreateDust();
         }
 
-        //Animation
+        //Анимация бега
         if (dir.x != 0)
         {
             isRunning = true;
@@ -102,7 +106,7 @@ public class CharacterController : MonoBehaviour
 
         UpdateAnimations();
 
-        //Dust effect before jump
+        //Эффект пыли до прыжка
         if (!wasOnGround && isGrounded)
         {
             CreateDust();
@@ -110,28 +114,28 @@ public class CharacterController : MonoBehaviour
 
         wasOnGround = isGrounded;
 
-        //Bleeding
+        //Кровотечение
         currentBlood = maxBlood - bloodAmount.time;
         bloodBar.SetBlood(currentBlood);
 
         //Усталость
-        if (currentBlood < 30f)
+        if (currentBlood < walkVelocity)
         {
             moveSpeed = 4.5f;
             jumpForce = 6.4f;
             
         }
 
-        if (currentBlood < 5f)
+        if (currentBlood < dragVelocity)
         {
             moveSpeed = 2.5f;
             jumpForce = 3.4f;
         }
-
         
         //Смерть
         if (bloodAmount.time == maxBlood || isCharacterDead == true)
         {
+            FindObjectOfType<AudioManager>().Play("BloodSplash");
             CinemachineShake.Instance.ShakeCamera(5f, .1f);
             Destroy(this.gameObject);
             gameOverScreen.Setup();
@@ -200,8 +204,24 @@ public class CharacterController : MonoBehaviour
             new Vector2(0.39f, 0.01f));
     }
 
+    //Запус системы частиц, создающая пыль
     void CreateDust()
     {
         dust.Play();
+    }
+
+    //Конец уровня
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "BloodPack")
+        {
+            Destroy(collision.gameObject);
+            levelLoader.LoadLevel();
+        }
+    }
+
+    private void Footstep()
+    {
+        FindObjectOfType<AudioManager>().Play("FootStep");
     }
 }

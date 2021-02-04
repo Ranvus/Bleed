@@ -29,6 +29,7 @@ public class Blood : MonoBehaviour
             {
                 Destroy(collider.gameObject);
                 CinemachineShake.Instance.ShakeCamera(5f, .1f);
+                FindObjectOfType<AudioManager>().Play("BloodSplash");
             }
         }
     }

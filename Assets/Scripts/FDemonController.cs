@@ -10,6 +10,8 @@ public class FDemonController : MonoBehaviour
     [SerializeField] private Transform fdemonGFX;
     [SerializeField] private ParticleSystem particles;
 
+    [SerializeField] private AudioSource growl;
+
     private float flySpeed = 400f;
     private float nextWaypointDistance = 1f;
 
@@ -43,6 +45,7 @@ public class FDemonController : MonoBehaviour
             Shoot();
             timer = cooldown;
         }
+        //growl.Play();
     }
 
     private void Shoot()
